@@ -8,10 +8,7 @@
 <metacharset-"UTF-8">
 </head>
 <body>
-	<h1>AccountRegisterOk</h1>
-
-	ID : ${account.id}
-	<br /> PW : ${account.password}
+	<h1>출금이 완료되었습니다!</h1>
 	<br /> 잔액 : ${account.balance}
 	<br />
 

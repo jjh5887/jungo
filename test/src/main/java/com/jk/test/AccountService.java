@@ -13,8 +13,20 @@ public class AccountService {
 	
 	@RequestMapping(value="/as", method=RequestMethod.POST)
 	public String registerAccount(Account account) {
-		dao.accountInsert(account.getid(), account.getpassword(), account.getbalance());
+		dao.accountInsert(account);
 		return "AccountRegisterOk";
+	}
+	
+	@RequestMapping(value="/deposit", method=RequestMethod.POST)
+	public String deposit(Account account) {
+		Account buf = dao.findAccount(account.getid());
+		if(null == buf || !buf.getpassword().equals(account.getpassword()))
+			return "loginfail";
+		else {
+			account.setbalance(buf.getbalance() - account.getbalance());
+			dao.setAccountBalance(account.getid(), account.getbalance());
+			return "deposit";
+		}
 	}
 
 }

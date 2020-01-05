@@ -9,6 +9,6 @@
 	ID : ${memId}<br />
 	PW : ${memPw}<br />
 	
-	<a href="/lec18/resources/html/index.html"> Go Main </a>
+	<a href="/test/resources/html/index.html"> Go Main </a>
 </body>
 </html>

@@ -4,7 +4,7 @@ public class Account {
 	
 	private String id;
 	private int balance;
-	private int password;
+	private String password;
 	
 	public int getbalance() {
 		return this.balance;
@@ -12,10 +12,10 @@ public class Account {
 	public void setbalance(int balance) {
 		this.balance = balance;
 	}
-	public int getpassword() {
+	public String getpassword() {
 		return this.password;
 	}
-	public void setpassword(int password) {
+	public void setpassword(String password) {
 		this.password = password;
 	}
 	public String getid() {
