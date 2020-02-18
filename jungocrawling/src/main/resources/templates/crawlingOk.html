@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>크롤링 성공</title>
+</head>
+<body>
+    <h1>크롤링 성공!</h1>
+
+    <script th:inline="javascript">
+        var title = [[${title}]];
+        var link = [[${address}]];
+        var price = [[${price}]];
+        document.write("<table border='1'  bordercolor=\"red\" align = \"center\">" +
+            "<tr bgcolor='#8b0000' align='center'><td style='color:white'>글제목</td><td style='color:white'>가격</td><td style='color:white'>주소</td>" +
+            "</tr>");
+        for (var i in title){
+            document.write("<tr>");
+            document.write("<td>" + title[i] + "</td>");
+            document.write("<td>" + price[i] + "</td>");
+            document.write("<td>" + link[i] + "</td>");
+            document.write("</tr>");
+        }
+        document.write("</table>");
+    </script>
+</body>
+</html>
