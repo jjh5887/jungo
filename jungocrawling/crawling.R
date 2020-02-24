@@ -1,17 +1,11 @@
-
-
-
-library(stringr)
-options("scipen" = 100)
-remDr <- rD[["client"]] 
-
-
 final_address<-c()
 final_title<-c()
 final_price<-c()
 data<-c()
 final_data<-c()
+final_img<-c()
 price<-NULL
+img_list<-NULL
 
 
 keyword4<-""
@@ -63,15 +57,16 @@ for(page in 1:page_i){
   for(i3 in 1:length(title_final)){
     cat(page, "페이지의 ",i3 ,"번째 제품 크롤링중....\n")
     remDr$navigate(product_url[i3])
-    sleep_i<-runif(1)
-    if(sleep_i>0.7){
-      Sys.sleep(sleep_i-0.4)
-    }else if(sleep_i<0.3){
-      Sys.sleep(sleep_i+0.3)
-    }else{
-      Sys.sleep(sleep_i)
-    }
+    Sys.sleep(0.3)
     s_ss<-(remDr$getPageSource()[1])
+    
+    img<-str_extract(s_ss,("(?<=imgUrl<).*(?=saleInfo/productName)"))
+    img_list[i3]<-str_extract(img,("(?<=title=\\\").*(?=\\\" draggable)"))
+    if(is.na(img)){
+      img<-str_split(s_ss,"dthumb-phinf")
+      img1<-str_extract(img[[1]][2],("(?<=src=).*(?=\\\" draggable)"))
+      img_list[i3]<-paste0("https://dthumb-phinf.pstatic.net/?src=", img1)
+    }
     
     test_p1<-str_extract(s_ss,("(?<=price<).*(?=주의하세요)"))
     test_p2<-str_extract(s_ss,("(?<=price).*(?=주의하세요)"))
@@ -84,7 +79,7 @@ for(page in 1:page_i){
       p5<-gsub(",","",p4)
       p6<-gsub(" ","",p5)
       price[i3]<-as.double(p6)
-    }else if(!(is.na(test_p2))){
+      } else if(!(is.na(test_p2))){
       p1<-str_extract(s_ss,("(?<=price).*(?=주의하세요)"))
       p2<-str_extract(p1,("(?<=:).*(?=topBanner)"))
       p3<-str_extract(p2,("(?<=).*(?=,)"))
@@ -98,8 +93,11 @@ for(page in 1:page_i){
       p6<-gsub(" ","",p5)
       price[i3]<-as.double(p6)
     }
-    final_price<-c(final_price, price)
   }
+  final_img<-c(final_img, img_list)
+  final_price<-c(final_price, price)
   price<-NULL
+  img_list<-NULL
 }
 
+rD$server$process$kill_tree()

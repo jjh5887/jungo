@@ -1,27 +1,98 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <title>크롤링 성공</title>
+    <title>중고나라 간편 검색</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/rangeslider.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+
 </head>
 <body>
-    <h1>크롤링 성공!</h1>
-
-    <script th:inline="javascript">
-        var title = [[${title}]];
-        var link = [[${address}]];
-        var price = [[${price}]];
-        document.write("<table border='1'  bordercolor=\"red\" align = \"center\">" +
-            "<tr bgcolor='#8b0000' align='center'><td style='color:white'>글제목</td><td style='color:white'>가격</td><td style='color:white'>주소</td>" +
-            "</tr>");
-        for (var i in title){
-            document.write("<tr>");
-            document.write("<td>" + title[i] + "</td>");
-            document.write("<td>" + price[i] + "</td>");
-            document.write("<td>" + link[i] + "</td>");
-            document.write("</tr>");
+<script th:inline="javascript">
+    var title = [[${title}]];
+    var link = [[${link}]];
+    var price = [[${price}]];
+    var img = [[${img}]];
+    document.write("<div class=\"site-section\" data-aos=\"fade\">\n" +
+        "    <div class=\"container\">\n" +
+        "        <div class=\"row justify-content-center mb-5\">\n" +
+        "            <div class=\"col-md-7 text-center border-primary\">\n" +
+        "                <h2 class=\"font-weight-light text-primary\">검색 결과</h2>\n" +
+        "                <p class=\"color-black-opacity-5\">중고나라 회원이 아니신 경우 해당 제품 페이지에 방문이 힘드실 수 있습니다.</p>\n" +
+        "            </div>\n" +
+        "        </div><div class=\"row\">");
+    for (var i in title){
+        img[i] = img[i].replace("u0026",'&#38;');
+        if(title[i].length > 35){
+            title[i] = title[i].substr(0,34);
+            title[i] = title[i] + "..."
         }
-        document.write("</table>");
-    </script>
+        if(price[i] < 1)
+            continue;
+        document.write("<div class=\"col-md-6 mb-4 mb-lg-4 col-lg-4\">\n" +
+            "\n" + "<div class=\"listing-item\">\n" + "<div class=\"listing-image\">\n");
+        if(img[i].includes("dthumb")){
+            document.write("<img src=" + img[i] + "&type=cafe_wa740 width=\"100\" height=\"100\"");
+            // document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");
+        } else if(img[i].includes("NA")){
+            document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");
+        } else{
+            document.write("<img src=" + img[i] + " width=\"100\" height=\"70\"");
+        }
+        document.write("alt=\"Free Website Template by Free-Template.co\" class=\"img-fluid\">\n" +
+            "</div>\n" + "<div class=\"listing-item-content\">\n" +
+            "<a href=\"listings-single.html\" class=\"bookmark\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Bookmark\"><span class=\"icon-heart\"></span></a>\n" +
+            "<a class=\"px-3 mb-3 category\" href=\"#\">" + price[i] + "</a>\n" +
+            "<h2 class=\"mb-1\"><a href=\"" + link[i] +"\"/target=\"_sub\">" + title[i] + "</h2> </div></div></div>")
+
+    }
+    document.write("</div></div>\n" +
+        "</div></a>");
+
+</script>
+
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/rangeslider.min.js"></script>
+
+
+<script src="js/typed.js"></script>
+<script>
+    var typed = new Typed('.typed-words', {
+        strings: ["에어팟 프로","아이폰 11","닌텐도 스위치", "당신이 원하는것"],
+        typeSpeed: 80,
+        backSpeed: 80,
+        backDelay: 4000,
+        startDelay: 1000,
+        loop: true,
+        showCursor: true
+    });
+</script>
+
+<script src="js/main.js"></script>
+
 </body>
 </html>

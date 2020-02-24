@@ -3,8 +3,6 @@ package com.jungo.jungocrawling;
 import org.jsoup.Jsoup;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.RList;
-import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.swing.text.Document;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Vector;
 
 @Controller
 public class CrawlingController {
@@ -28,27 +25,43 @@ public class CrawlingController {
     public String jungocrawling(){
         return "jungocrawling";
     }
-    @PostMapping("/jungocrawling/as")
-    public String Rcrawling(Model model,@RequestParam("keyword") String keyword, @RequestParam("page") int page) {
-        REXP rList;
-        int len;
+
+    @PostMapping("/as")
+    public String Rcrawling(Model model, @RequestParam("keyword") String keyword) {
         String[] address;
+        String[] img;
         String[] title;
         int[] price;
+        int port = 0;
+        port = rconnect.getPort();
+
+        try {
+            rconnect.connection.eval("library(RSelenium)");
+            rconnect.connection.eval("rD <- rsDriver(browser=\"fire\",port=as.integer(" + port + "))");
+        } catch (RserveException e) {
+            e.printStackTrace();
+            rconnect.retrunPort(port);
+        }
         try{
+            rconnect.connection.eval("setwd('C:\\\\R')");
+            rconnect.connection.eval("source(\"login.R\")");
             rconnect.connection.eval("keyword<-'" + keyword + "'");
-            rconnect.connection.eval("page_i<-" + page);
+            rconnect.connection.eval("page_i<-" + 1);
             rconnect.connection.eval("source(\"crawling.R\")");
+            rconnect.retrunPort(port);
             address = rconnect.connection.eval("final_address").asStrings();
             title = rconnect.connection.eval("final_title").asStrings();
             price = rconnect.connection.eval("final_price").asIntegers();
-
-            model.addAttribute("address",address);
+            img = rconnect.connection.eval("final_img").asStrings();
+            model.addAttribute("link",address);
             model.addAttribute("title",title);
             model.addAttribute("price",price);
-
+            model.addAttribute("img",img);
+            for(int i = 0; i < title.length; i++)
+                System.out.println(img[i]);
         } catch (RserveException | REXPMismatchException e) {
             e.printStackTrace();
+            return "crawlingOk";
         }
         return "crawlingOk";
     }
