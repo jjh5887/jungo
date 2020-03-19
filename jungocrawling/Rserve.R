@@ -1,0 +1,4 @@
+library(Rserve)
+Rserve(FALSE,port=6311,args='--RS-encoding utf8 --no-save --slave --encoding utf8  --internet2')
+Rserve(FALSE,port=6312,args='--RS-encoding utf8 --no-save --slave --encoding utf8  --internet2')
+Rserve(FALSE,port=6313,args='--RS-encoding utf8 --no-save --slave --encoding utf8  --internet2')

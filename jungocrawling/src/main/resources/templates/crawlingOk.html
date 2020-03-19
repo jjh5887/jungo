@@ -35,22 +35,16 @@
         "            </div>\n" +
         "        </div><div class=\"row\">");
     for (var i in title){
-        img[i] = img[i].replace("u0026",'&#38;');
         if(title[i].length > 35){
             title[i] = title[i].substr(0,34);
             title[i] = title[i] + "..."
         }
-        if(price[i] < 1)
-            continue;
         document.write("<div class=\"col-md-6 mb-4 mb-lg-4 col-lg-4\">\n" +
             "\n" + "<div class=\"listing-item\">\n" + "<div class=\"listing-image\">\n");
-        if(img[i].includes("dthumb")){
-            document.write("<img src=" + img[i] + "&type=cafe_wa740 width=\"100\" height=\"100\"");
-            // document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");
-        } else if(img[i].includes("NA")){
+        if(img[i].includes("NA")){
             document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");
         } else{
-            document.write("<img src=" + img[i] + " width=\"100\" height=\"70\"");
+            document.write("<img src=" + img[i] + " width=\"100\" height=\"100\"");
         }
         document.write("alt=\"Free Website Template by Free-Template.co\" class=\"img-fluid\">\n" +
             "</div>\n" + "<div class=\"listing-item-content\">\n" +
@@ -61,10 +55,7 @@
     }
     document.write("</div></div>\n" +
         "</div></a>");
-
 </script>
-
-</div>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-migrate-3.0.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -93,6 +84,109 @@
 </script>
 
 <script src="js/main.js"></script>
+<!--<div class="site-section" data-aos="fade">-->
+<!--    <div class="container">-->
+<!--        <div class="row justify-content-center mb-5">-->
+<!--            <div class="col-md-7 text-center border-primary">-->
+<!--                <h2 class="font-weight-light text-primary">Most Visited Places</h2>-->
+<!--                <p class="color-black-opacity-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>-->
+<!--            </div>-->
+<!--        </div>-->
 
+<!--        <div class="row">-->
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_1.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Hotels</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">Luxe Hotel</a></h2>-->
+<!--                        <span class="address">West Orange, New York</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Restaurants</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">Jones Grill &amp; Restaurants</a></h2>-->
+<!--                        <span class="address">Brooklyn, New York</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_3.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Events</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">Live Band</a></h2>-->
+<!--                        <span class="address">West Orange, New York</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_4.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Others</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">Gourmet Coffees</a></h2>-->
+<!--                        <span class="address">New York City</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_5.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Spa</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">La Italia Spa</a></h2>-->
+<!--                        <span class="address">Italy</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+
+<!--                <div class="listing-item">-->
+<!--                    <div class="listing-image">-->
+<!--                        <img src="images/img_6.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="listing-item-content">-->
+<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
+<!--                        <a class="px-3 mb-3 category" href="#">Stores</a>-->
+<!--                        <h2 class="mb-1"><a href="listings-single.html">Super Market Mall</a></h2>-->
+<!--                        <span class="address">West Orange, New York</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>&lt;!&ndash; 이거임!!!  &ndash;&gt;-->
 </body>
 </html>
