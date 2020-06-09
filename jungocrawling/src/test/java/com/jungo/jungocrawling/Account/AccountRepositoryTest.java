@@ -27,7 +27,6 @@ class AccountRepositoryTest {
 
     @Autowired
     AccountRepository accountRepository;
-
     @Test
     public void di() throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
@@ -38,7 +37,7 @@ class AccountRepositoryTest {
         }
     }
 
-//    @Test
+  //  @Test
 //    public void itemTest() throws SQLException {
 //        Item account = new Item();
 //        account.set

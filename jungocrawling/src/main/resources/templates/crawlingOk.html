@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="kr" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>중고나라 간편 검색</title>
     <meta charset="utf-8">
@@ -17,45 +16,106 @@
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/rangeslider.css">
     <link rel="stylesheet" href="css/style.css">
-    
+
 
 </head>
 <body>
+
+<!--<script th:inline="javascript">-->
+<!--    var title = [[${title}]];-->
+<!--    var link = [[${link}]];-->
+<!--    var price = [[${price}]];-->
+<!--    var img = [[${img}]];-->
+<!--    document.write("<div class=\"site-section\" data-aos=\"fade\">\n" +-->
+<!--        "    <div class=\"container\">\n" +-->
+<!--        "        <div class=\"row justify-content-center mb-5\">\n" +-->
+<!--        "            <div class=\"col-md-7 text-center border-primary\">\n" +-->
+<!--        "                <h2 class=\"font-weight-light text-primary\">검색 결과</h2>\n" +-->
+<!--        "                <p class=\"color-black-opacity-5\">중고나라 회원이 아니신 경우 해당 제품 페이지에 방문이 힘드실 수 있습니다.</p>\n" +-->
+<!--        "            </div>\n" +-->
+<!--        "        </div><div class=\"row\">");-->
+<!--    for (var i  = 0; i < title.length; i++){-->
+<!--        if(title[i].length > 35){-->
+<!--            title[i] = title[i].substr(0,34);-->
+<!--            title[i] = title[i] + "..."-->
+<!--        }-->
+<!--        document.write("<div class=\"col-md-6 mb-4 mb-lg-4 col-lg-4\">\n" +-->
+<!--            "\n" + "<div class=\"listing-item\">\n" + "<div class=\"listing-image\">\n");-->
+<!--        if(img[i].includes("NA")){-->
+<!--            document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");-->
+<!--        } else{-->
+<!--            document.write("<img src=" + img[i] + " width=\"100\" height=\"100\"");-->
+<!--        }-->
+<!--        document.write("alt=\"Free Website Template by Free-Template.co\" class=\"img-fluid\">\n" +-->
+<!--            "</div>\n" + "<div class=\"listing-item-content\">\n" +-->
+<!--            "<a href=\"listings-single.html\" class=\"bookmark\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Bookmark\"><span class=\"icon-heart\"></span></a>\n" +-->
+<!--            "<a class=\"px-3 mb-3 category\" href=\"#\">" + price[i] + "</a>\n" +-->
+<!--            "<h2 class=\"mb-1\"><a href=\"" + link[i] +"\"/target=\"_sub\">" + title[i] + "</h2> </div></div></div>")-->
+
+<!--    }-->
+<!--    document.write("</div></div>\n" +-->
+<!--        "</div></a>");-->
+<!--</script>-->
 <script th:inline="javascript">
     var title = [[${title}]];
-    var link = [[${link}]];
+    var address = [[${address}]];
     var price = [[${price}]];
     var img = [[${img}]];
+    var keyword =[[${keyword}]];
+
+    document.write("<form action=\"/as/asc\" method=\"get\" id=\"searchitem\">\n" +
+        "    <div class=\"row align-items-left\">\n" +
+        "        <div class=\"col-lg-12 col-xl-9 no-sm-border border-right align-items-center\">\n" +
+        "            <input type=\"hidden\" class=\"form-control\"  name=\"keyword\"  id=\"keyword\" value=" + keyword +">\n" +
+        "        </div>\n" +
+        "        <div class=\"col-lg-10 col-xl-2 ml-2 text-center\">\n" +
+        "            <input type=\"submit\" class=\"btn text-white btn-primary\" value=\"Search\">\n" +
+        "        </div>\n" +
+        "    </div>\n" +
+        "</form>");
     document.write("<div class=\"site-section\" data-aos=\"fade\">\n" +
         "    <div class=\"container\">\n" +
         "        <div class=\"row justify-content-center mb-5\">\n" +
         "            <div class=\"col-md-7 text-center border-primary\">\n" +
         "                <h2 class=\"font-weight-light text-primary\">검색 결과</h2>\n" +
-        "                <p class=\"color-black-opacity-5\">중고나라 회원이 아니신 경우 해당 제품 페이지에 방문이 힘드실 수 있습니다.</p>\n" +
+        "                <p class=\"color-black-opacity-5\">중고나라 회원이 아니신 경우 해당 제품 페이지에 방문이 힘드실 수 있습니다</p>\n" +
         "            </div>\n" +
-        "        </div><div class=\"row\">");
-    for (var i in title){
-        if(title[i].length > 35){
-            title[i] = title[i].substr(0,34);
+        "        </div>\n" +
+        "\n" +
+        "        <div class=\"row\">");
+
+    for (var i = 0; i < price.length; i++) {
+        if (title[i].length > 35) {
+            title[i] = title[i].substr(0, 34);
             title[i] = title[i] + "..."
         }
         document.write("<div class=\"col-md-6 mb-4 mb-lg-4 col-lg-4\">\n" +
-            "\n" + "<div class=\"listing-item\">\n" + "<div class=\"listing-image\">\n");
-        if(img[i].includes("NA")){
+            "                <div class=\"listing-item\">\n" +
+            "                    <div class=\"listing-image\">\n");
+        if (img[i].includes("NA")) {
             document.write("<img src=\"images/img_1.jpg\" width=\"720\" height=\"720\"");
-        } else{
+        } else {
             document.write("<img src=" + img[i] + " width=\"100\" height=\"100\"");
         }
-        document.write("alt=\"Free Website Template by Free-Template.co\" class=\"img-fluid\">\n" +
-            "</div>\n" + "<div class=\"listing-item-content\">\n" +
-            "<a href=\"listings-single.html\" class=\"bookmark\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Bookmark\"><span class=\"icon-heart\"></span></a>\n" +
-            "<a class=\"px-3 mb-3 category\" href=\"#\">" + price[i] + "</a>\n" +
-            "<h2 class=\"mb-1\"><a href=\"" + link[i] +"\"/target=\"_sub\">" + title[i] + "</h2> </div></div></div>")
-
+        document.write("alt=\"images/img_1.jpg\" class=\"img-fluid\">\n" +
+            "                    </div>\n" +
+            "                    <div class=\"listing-item-content\">\n" +
+            "                        <a href=\"listings-single.html\" class=\"bookmark\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Bookmark\"><span class=\"icon-heart\"></span></a>\n" +
+            "                        <a class=\"px-3 mb-3 category\" href=\"#\">" + price[i] + "</a>\n" +
+            "                        <h2 class=\"mb-1\"><a href=\"" + address[i] + "\">" + title[i] + "</a></h2>\n" +
+            "                        <span class=\"address\"></span>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</div>")
     }
-    document.write("</div></div>\n" +
-        "</div></a>");
+
 </script>
+
+
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-migrate-3.0.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -73,7 +133,7 @@
 <script src="js/typed.js"></script>
 <script>
     var typed = new Typed('.typed-words', {
-        strings: ["에어팟 프로","아이폰 11","닌텐도 스위치", "당신이 원하는것"],
+        strings: ["에어팟 프로", "아이폰 11", "닌텐도 스위치", "당신이 원하는것"],
         typeSpeed: 80,
         backSpeed: 80,
         backDelay: 4000,
@@ -82,111 +142,40 @@
         showCursor: true
     });
 </script>
-
 <script src="js/main.js"></script>
-<!--<div class="site-section" data-aos="fade">-->
-<!--    <div class="container">-->
-<!--        <div class="row justify-content-center mb-5">-->
-<!--            <div class="col-md-7 text-center border-primary">-->
-<!--                <h2 class="font-weight-light text-primary">Most Visited Places</h2>-->
-<!--                <p class="color-black-opacity-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>-->
-<!--            </div>-->
-<!--        </div>-->
+<nav style="text-align: center;">
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
+                    last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+        <li>
+            <a th:href="@{/boards(page=1)}" aria-label="First">
+                <span aria-hidden="true">First</span>
+            </a>
+        </li>
 
-<!--        <div class="row">-->
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+        <li th:class="${boardList.first} ? 'disabled'">
+            <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
 
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_1.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Hotels</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">Luxe Hotel</a></h2>-->
-<!--                        <span class="address">West Orange, New York</span>-->
-<!--                    </div>-->
-<!--                </div>-->
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
+            <a th:text="${page}" th:href="@{/boards(page=${page})}"></a>
+        </li>
 
-<!--            </div>-->
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
+        <li th:class="${boardList.last} ? 'disabled'">
+            <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
 
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Restaurants</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">Jones Grill &amp; Restaurants</a></h2>-->
-<!--                        <span class="address">Brooklyn, New York</span>-->
-<!--                    </div>-->
-<!--                </div>-->
+        <li>
+            <a th:href="@{/boards(page=${boardList.totalPages})}" aria-label="Last">
+                <span aria-hidden="true">Last</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-<!--            </div>-->
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
-
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_3.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Events</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">Live Band</a></h2>-->
-<!--                        <span class="address">West Orange, New York</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
-
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_4.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark" data-toggle="tooltip" data-placement="left" title="Bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Others</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">Gourmet Coffees</a></h2>-->
-<!--                        <span class="address">New York City</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
-
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_5.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Spa</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">La Italia Spa</a></h2>-->
-<!--                        <span class="address">Italy</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--            <div class="col-md-6 mb-4 mb-lg-4 col-lg-4">-->
-
-<!--                <div class="listing-item">-->
-<!--                    <div class="listing-image">-->
-<!--                        <img src="images/img_6.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">-->
-<!--                    </div>-->
-<!--                    <div class="listing-item-content">-->
-<!--                        <a href="listings-single.html" class="bookmark"><span class="icon-heart"></span></a>-->
-<!--                        <a class="px-3 mb-3 category" href="#">Stores</a>-->
-<!--                        <h2 class="mb-1"><a href="listings-single.html">Super Market Mall</a></h2>-->
-<!--                        <span class="address">West Orange, New York</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>&lt;!&ndash; 이거임!!!  &ndash;&gt;-->
 </body>
 </html>

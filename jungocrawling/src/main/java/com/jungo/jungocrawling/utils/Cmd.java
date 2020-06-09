@@ -1,4 +1,4 @@
-package com.jungo.jungocrawling;
+package com.jungo.jungocrawling.utils;
 
 import org.springframework.stereotype.Component;
 

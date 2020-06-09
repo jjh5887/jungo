@@ -1,24 +1,23 @@
 package com.jungo.jungocrawling.Account;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "Item")
 public class Item {
 
-    @Id @GeneratedValue
     private Long id;
 
-    private String itemname;
-
+    @Column(length = 400)
     private String title;
 
+    private int price;
+
+    @Id
     private String address;
 
-    @Column(length = 800)
+    @Column(length = 1800)
     private String img;
 
     @Override
@@ -28,7 +27,6 @@ public class Item {
         Item item = (Item) o;
         return price == item.price &&
                 Objects.equals(id, item.id) &&
-                Objects.equals(itemname, item.itemname) &&
                 Objects.equals(title, item.title) &&
                 Objects.equals(address, item.address) &&
                 Objects.equals(img, item.img);
@@ -36,10 +34,9 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, itemname, title, address, img, price);
+        return Objects.hash(id, title, address, img, price);
     }
 
-    private int price;
 
     public Long getId() {
         return id;
@@ -47,14 +44,6 @@ public class Item {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getItemname() {
-        return itemname;
-    }
-
-    public void setItemname(String itemname) {
-        this.itemname = itemname;
     }
 
     public String getTitle() {
@@ -88,4 +77,5 @@ public class Item {
     public void setPrice(int price) {
         this.price = price;
     }
+
 }

@@ -8,6 +8,8 @@ public class JungocrawlingApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JungocrawlingApplication.class, args);
+
+
     }
 
 }
