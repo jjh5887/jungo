@@ -7,6 +7,7 @@ import java.util.Objects;
 @Table(name = "Item")
 public class Item {
 
+    @Id
     private Long id;
 
     @Column(length = 400)
@@ -14,7 +15,6 @@ public class Item {
 
     private int price;
 
-    @Id
     private String address;
 
     @Column(length = 1800)
