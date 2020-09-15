@@ -2,6 +2,7 @@ package com.jungo.jungocrawling.Account;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.awt.print.Pageable;
@@ -25,6 +26,7 @@ public interface AccountRepository extends JpaRepository<Item, Long> {
     @Query(nativeQuery = true, value = "select count(*) from item where title LIKE CONCAT('%', :keyword, '%')")
     int getCount(String keyword);
 
-    @Query(nativeQuery = true, value = "delete from item where id <= :id")
-    void deleteByOldid(Long id);
+    @Modifying
+    @Query(nativeQuery = true, value = "delete from item where id <= :oldId")
+    void deleteByoldId(Long oldId);
 }
