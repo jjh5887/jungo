@@ -1,6 +1,7 @@
 package com.jungo.jungocrawling.Account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,7 @@ public interface DateRepository extends JpaRepository<Date, Long> {
     @Query(nativeQuery = true, value = "select count(*)>0 from date where date = :deleteDate")
     Boolean existsByDate(Long deleteDate);
 
-    @Query(nativeQuery = true, value = "delete from date where date <= :deleteDate")
-    void deleteByDate(Long deleteDate);
+    @Modifying
+    @Query(nativeQuery = true, value = "delete from date where date <= :oldDate")
+    void deleteByDate(Long oldDate);
 }
