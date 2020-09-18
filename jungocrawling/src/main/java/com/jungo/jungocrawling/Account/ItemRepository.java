@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.awt.print.Pageable;
 import java.util.List;
 
-public interface AccountRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
 //    @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') ORDER BY id DESC offset :page*18 - 18 LIMIT 18")
 //    List<Item> findByKeyword(String keyword, Integer page);

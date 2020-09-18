@@ -1,6 +1,6 @@
 package com.jungo.jungocrawling;
 
-import com.jungo.jungocrawling.Account.AccountRepository;
+import com.jungo.jungocrawling.Account.ItemRepository;
 import com.jungo.jungocrawling.Account.Item;
 import com.jungo.jungocrawling.utils.Criteria;
 import com.jungo.jungocrawling.utils.PageMaker;
@@ -15,16 +15,16 @@ import java.util.List;
 public class CrawlingController {
 
     @Autowired
-    AccountRepository accountRepository;
+    ItemRepository itemRepository;
 
     @RequestMapping(value = "/as", method = RequestMethod.GET)
     public String jungocrawling(Model model, @RequestParam("keyword") String keyword, @ModelAttribute("cri") Criteria cri){
         int count;
-        count = accountRepository.getCount(keyword);
+        count = itemRepository.getCount(keyword);
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(count);
-        List<Item> item = accountRepository.findByKeyword(keyword,cri.getPage());
+        List<Item> item = itemRepository.findByKeyword(keyword,cri.getPage());
         model.addAttribute("list", item);
         model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("keyword", keyword);
@@ -35,7 +35,7 @@ public class CrawlingController {
     @GetMapping("/as/asc")
     public String ASC(Model model, @RequestParam("keyword") String keyword){
 
-        List<Item> item = accountRepository.findByASC(keyword);
+        List<Item> item = itemRepository.findByASC(keyword);
         String[] address = new String[item.size()];
         String[] title = new String[item.size()];
         String[] img = new String[item.size()];
@@ -59,7 +59,7 @@ public class CrawlingController {
     @GetMapping("/as/desc")
     public String DESC(Model model, @RequestParam("keyword") String keyword){
 
-        List<Item> item = accountRepository.findByDESC(keyword);
+        List<Item> item = itemRepository.findByDESC(keyword);
         String[] address = new String[item.size()];
         String[] title = new String[item.size()];
         String[] img = new String[item.size()];

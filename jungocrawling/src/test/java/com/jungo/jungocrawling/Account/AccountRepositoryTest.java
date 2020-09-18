@@ -13,8 +13,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
 class AccountRepositoryTest {
@@ -26,7 +24,7 @@ class AccountRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    AccountRepository accountRepository;
+    ItemRepository itemRepository;
     @Test
     public void di() throws SQLException {
         try (Connection connection = dataSource.getConnection()) {

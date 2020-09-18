@@ -2,7 +2,7 @@ package com.jungo.jungocrawling.utils;
 
 import java.util.Date;
 
-import com.jungo.jungocrawling.Account.AccountRepository;
+import com.jungo.jungocrawling.Account.ItemRepository;
 import com.jungo.jungocrawling.Account.DateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +20,7 @@ public class Scheduler {
     DateRepository dateRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    ItemRepository itemRepository;
 
     @Scheduled(cron = "5 * * * * *")
     public void deleteItem(){
@@ -56,8 +56,8 @@ public class Scheduler {
         if (dateRepository.existsByDate(OldDate)) {
             dates = dateRepository.findByDate(OldDate);
             System.out.println(dates.get(0).getId());
-            if (accountRepository.existsById(dates.get(0).getId()))
-                accountRepository.deleteByoldId(dates.get(0).getId());
+            if (itemRepository.existsById(dates.get(0).getId()))
+                itemRepository.deleteByoldId(dates.get(0).getId());
             dateRepository.deleteByDate(OldDate);
         }
 
