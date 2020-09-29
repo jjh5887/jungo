@@ -21,6 +21,8 @@ public class CrawlingController {
     public String jungocrawling(Model model, @RequestParam("keyword") String keyword, @ModelAttribute("cri") Criteria cri){
         int count;
         count = itemRepository.getCount(keyword);
+        if (count == 0)
+            return "noItem";
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(count);

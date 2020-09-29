@@ -56,45 +56,12 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 text-center border-primary">
                 <h2 class="font-weight-light text-primary">검색결과</h2>
-                <p class="color-black-opacity-5">중고나라 회원이 아니신 경우 해당 제품 페이지에 방문이 힘드실 수 있습니다</p>
+                <br>
+                <p class="color-black-opacity-5">등록된 게시글이 없습니다</p>
             </div>
         </div><br>
 
 
-        <div class="row">
-            <div th:each="boardVO : ${list}" class="col-md-6 mb-4 mb-lg-4 col-lg-4">
-                <div class="listing-item">
-                    <div class="listing-image">
-                        <img th:src="${boardVO.getImg()}" onerror="this.src='images/notfound.jpg'" alt="Free Website Template by Free-Template.co" class="img-fluid" src="">
-                    </div>
-                    <div class="listing-item-content">
-                        <a href="listings-single.html" class="bookmark" data-toggle="tooltip" data-placement="left"
-                           title="Bookmark"><span class="icon-heart"></span></a>
-                        <a class="px-3 mb-3 category" href="#" th:text="${boardVO.getPrice()}">price</a>
-                        <h2 class="mb-1"><a th:href="${boardVO.getAddress()}" th:text="${boardVO.getTitle()}">Title</a>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="box-footer clearfix" align="center">
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li th:if="${pageMaker.prev} == true">
-                    <a th:href="@{/as(keyword=${keyword},page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
-                </li>
-
-                <li th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
-                    th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
-                    <a th:href="@{as(keyword=${keyword},page=${idx},perPageNum=${pageMaker.cri.perPageNum})}"
-                       th:text="${idx}"></a>
-                </li>
-
-                <li th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
-                    <a th:href="@{/as(keyword=${keyword},page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
-                </li>
-            </ul>
-        </div>
     </div>
 </div>
 
