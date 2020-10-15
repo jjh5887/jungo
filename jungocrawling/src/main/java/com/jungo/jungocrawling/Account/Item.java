@@ -4,15 +4,18 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Item", indexes = @Index(columnList = "id"))
+@Table(name = "Item", indexes = {
+    @Index(name = "IDX_title",columnList = "title"),
+    @Index(name = "IDX_title_price", columnList = "title,price")})
 public class Item {
 
     @Id
     private Long id;
 
-    @Column(length = 400)
+    @Column(length = 400, name = "title")
     private String title;
 
+    @Column(name = "price")
     private int price;
 
     private String address;
