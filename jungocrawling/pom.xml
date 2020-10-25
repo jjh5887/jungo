@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/gradle.plugin.com.mtbvang/devtool -->
+        <dependency>
+            <groupId>gradle.plugin.com.mtbvang</groupId>
+            <artifactId>devtool</artifactId>
+            <version>0.4.3</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
