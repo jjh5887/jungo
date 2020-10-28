@@ -45,11 +45,11 @@ class ItemRepositoryTest {
         item.setTitle("tem four");
         itemRepository.save(item);
 
-        List<Item> items = itemRepository.findByKeyword();
-        for (int i = 0; i < items.size(); i++){
-            System.out.println(items.get(i).getTitle());
-            System.out.println(items.get(i).getPrice());
-        }
+//        List<Item> items = itemRepository.findByKeyword();
+//        for (int i = 0; i < items.size(); i++){
+//            System.out.println(items.get(i).getTitle());
+//            System.out.println(items.get(i).getPrice());
+//        }
     }
 
 

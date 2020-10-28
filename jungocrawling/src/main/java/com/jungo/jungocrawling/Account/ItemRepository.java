@@ -15,8 +15,11 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 //    @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') ORDER BY id DESC offset :page*18 - 18 LIMIT 18")
 //    List<Item> findByKeyword(String keyword, Integer page);
 
-    @Query(nativeQuery = true, value = "select * from item order by id desc limit 10;")
-    List<Item> findByHome();
+    @Query(nativeQuery = true, value = "select * from item order by id desc limit 5;")
+    List<Item> findByHomeone();
+
+    @Query(nativeQuery = true, value = "select * from item order by id desc limit 5 offset 5;")
+    List<Item> findByHometwo();
     //select * from item ORDER BY id DESC LIMIT 10 offset 10; -> 11번째분터 10개 LIMIT가 갯수 offset이 시작점
 
     List<Item> findByTitleContainsOrderByPriceDesc(String title, Pageable pageable);

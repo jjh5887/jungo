@@ -20,8 +20,11 @@ public class CrawlingController {
 
     @RequestMapping(value = "/")
     public String home(Model model){
-        List<Item> list = itemRepository.findByHome();
-        model.addAttribute(list);
+        List<Item> list1 = itemRepository.findByHomeone();
+        List<Item> list2 = itemRepository.findByHometwo();
+        model.addAttribute("list1",list1);
+        model.addAttribute("list2",list2);
+        model.addAttribute("login", true);
         return "index";
     }
 
@@ -37,10 +40,10 @@ public class CrawlingController {
         System.out.println(cri.getPage());
         List<Item> item = itemRepository.findByTitleContainsOrderByIdDesc(keyword, PageRequest.of(cri.getPage() - 1, 9));
 
-        model.addAttribute("list", item);
+        model.addAttribute("items", item);
         model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("keyword", keyword);
-        return "Item";
+        return "item";
 
 
     }

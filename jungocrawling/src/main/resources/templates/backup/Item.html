@@ -62,7 +62,7 @@
 
 
         <div class="row">
-            <div th:each="boardVO : ${list}" class="col-md-6 mb-4 mb-lg-4 col-lg-4">
+            <div th:each="boardVO : ${items}" class="col-md-6 mb-4 mb-lg-4 col-lg-4">
                 <div class="listing-item">
                     <div class="listing-image">
                         <img th:src="${boardVO.getImg()}" onerror="this.src='images/notfound.jpg'" alt="Free Website Template by Free-Template.co" class="img-fluid" src="">
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="box-footer clearfix" align="center">
+        <nav aria-label="Page navigation example">
             <ul class="pagination pagination-sm no-margin pull-right">
                 <li th:if="${pageMaker.prev} == true">
                     <a th:href="@{/as(keyword=${keyword},page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
@@ -94,7 +94,7 @@
                     <a th:href="@{/as(keyword=${keyword},page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
                 </li>
             </ul>
-        </div>
+        </nav>
     </div>
 </div>
 
