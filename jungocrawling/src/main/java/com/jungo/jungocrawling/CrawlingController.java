@@ -5,6 +5,7 @@ import com.jungo.jungocrawling.Account.Item;
 import com.jungo.jungocrawling.utils.Criteria;
 import com.jungo.jungocrawling.utils.PageMaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,13 @@ public class CrawlingController {
     @Autowired
     ItemRepository itemRepository;
 
+    @RequestMapping(value = "/")
+    public String home(Model model){
+        List<Item> list = itemRepository.findByHome();
+        model.addAttribute(list);
+        return "index";
+    }
+
     @RequestMapping(value = "/as", method = RequestMethod.GET)
     public String jungocrawling(Model model, @RequestParam("keyword") String keyword, @ModelAttribute("cri") Criteria cri){
         int count;
@@ -26,7 +34,9 @@ public class CrawlingController {
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(count);
-        List<Item> item = itemRepository.findByKeyword(keyword,cri.getPage());
+        System.out.println(cri.getPage());
+        List<Item> item = itemRepository.findByTitleContainsOrderByIdDesc(keyword, PageRequest.of(cri.getPage() - 1, 9));
+
         model.addAttribute("list", item);
         model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("keyword", keyword);

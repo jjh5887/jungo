@@ -21,9 +21,10 @@
     <dependencies>
         <!-- https://mvnrepository.com/artifact/gradle.plugin.com.mtbvang/devtool -->
         <dependency>
-            <groupId>gradle.plugin.com.mtbvang</groupId>
-            <artifactId>devtool</artifactId>
-            <version>0.4.3</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
