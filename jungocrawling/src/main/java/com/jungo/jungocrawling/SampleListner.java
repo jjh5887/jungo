@@ -1,7 +1,6 @@
 package com.jungo.jungocrawling;
 
-import org.rosuda.REngine.Rserve.RserveException;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
