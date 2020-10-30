@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <!--    <link href="https://v4-alpha.getbootstrap.com/assets/css/docs.min.css" rel="stylesheet"/>-->
-    <!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet"/>-->
-    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>-->
-    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>-->
-    <!--    <script src="https://cdn.rawgit.com/imsky/holder/master/holder.js"></script>-->
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
@@ -24,14 +17,42 @@
         input::placeholder {
             font-size: larger;
         }
+
         input {
             font-size: xx-large;
         }
+
+        a:link {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: black;
+            text-decoration: none;
+        }
+
         .carousel-control-next,
         .carousel-control-prev {
             filter: invert(100%);
             width: 100%;
             height: 100%;
+        }
+
+        .txt_post {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* 라인수 */
+            -webkit-box-orient: vertical;
+            word-wrap:break-word;
+            line-height: 1.2em;
+            height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
         }
     </style>
 </head>
@@ -44,7 +65,6 @@
         <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"> 회원가입</button>
     </div>
 </nav>
-
 <div class="container">
     <div class="mt-5 text-center pt-5">
         <h1>검색해보세요</h1><br>
@@ -61,62 +81,18 @@
         </form>
     </div>
 </div>
+
+
+<br>
+<br>
+<br>
+<br>
 <br>
 <div class="container-lg">
     <div class="row pl-lg-5 pt-lg-5">
         <div class="col-lg-2">
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <p>
-                    <td colspan="2">실시간 검색어</td>
-                    </p>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="col" style="width: 10%;">1</th>
-                    <th scope="col">ㅁㄴㅇㅁㄴㅇ</th>
-                </tr>
-                <tr>
-                    <th scope="row"> 2</th>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 3</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 4</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 5</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 6</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 7</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 8</th>
-                    <td>Larry</td>
-                <tr>
-                    <th scope="row"> 9</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td>Larry</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
-        <div class="col-lg-8 ml-lg-5" >
+        <div class="col-lg-8 ml-lg-5">
             <div class="row ml-lg-5">
                 <h3>최근 등록된 상품</h3>
             </div>
@@ -131,20 +107,25 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col" th:each="boardVO : ${list1}">
-                                    <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
-                                         class="img-fluid">
-                                    <p th:text="${boardVO.getTitle()}"></p>
-                                    <p th:text="${boardVO.getPrice()}"></p>
+                                <div class="col" th:each="boardVO : ${list1}" style="height: 100%">
+                                    <a th:href="${boardVO.getAddress()}">
+                                        <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardVO.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardVO.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
                             <div class="row">
                                 <div class="col" th:each="boardV1 : ${list2}">
-                                    <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'" class="img-fluid">
-                                    <p th:text="${boardV1.getTitle()}"></p>
-                                    <p th:text="${boardV1.getPrice()}"></p>
+                                    <a th:href="${boardV1.getAddress()}">
+                                        <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardV1.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardV1.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -162,36 +143,41 @@
             </div>
             <div th:if="${login}" class="row mt-lg-5">
                 <div class="col-lg-1">
-                    <a class="carousel-control-prev" href="#gallery" role="button" data-slide="next">
+                    <a class="carousel-control-prev" href="#gallery_fa" role="button" data-slide="next">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <div id="gallery" class="col-lg-10 carousel slide" data-ride="carousel">
+                <div id="gallery_fa" class="col-lg-10 carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col" th:each="boardVO : ${list1}">
-                                    <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
-                                         class="img-fluid">
-                                    <p th:text="${boardVO.getTitle()}"></p>
-                                    <p th:text="${boardVO.getPrice()}"></p>
+                                <div class="col" th:each="boardVO : ${list1}" style="height: 100%">
+                                    <a th:href="${boardVO.getAddress()}">
+                                        <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardVO.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardVO.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
                             <div class="row">
                                 <div class="col" th:each="boardV1 : ${list2}">
-                                    <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'" class="img-fluid">
-                                    <p th:text="${boardV1.getTitle()}"></p>
-                                    <p th:text="${boardV1.getPrice()}"></p>
+                                    <a th:href="${boardV1.getAddress()}">
+                                        <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardV1.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardV1.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-1">
-                    <a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#gallery_fa" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -202,36 +188,41 @@
             </div>
             <div th:if="${login}" class="row mt-lg-5">
                 <div class="col-lg-1">
-                    <a class="carousel-control-prev" href="#gallery" role="button" data-slide="next">
+                    <a class="carousel-control-prev" href="#gallery_re" role="button" data-slide="next">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <div id="gallery" class="col-lg-10 carousel slide" data-ride="carousel">
+                <div id="gallery_re" class="col-lg-10 carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col" th:each="boardVO : ${list1}">
-                                    <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
-                                         class="img-fluid">
-                                    <p th:text="${boardVO.getTitle()}"></p>
-                                    <p th:text="${boardVO.getPrice()}"></p>
+                                <div class="col" th:each="boardVO : ${list1}" style="height: 100%">
+                                    <a th:href="${boardVO.getAddress()}">
+                                        <img th:src="${boardVO.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardVO.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardVO.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
                             <div class="row">
                                 <div class="col" th:each="boardV1 : ${list2}">
-                                    <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'" class="img-fluid">
-                                    <p th:text="${boardV1.getTitle()}"></p>
-                                    <p th:text="${boardV1.getPrice()}"></p>
+                                    <a th:href="${boardV1.getAddress()}">
+                                        <img th:src="${boardV1.getImg()}" onerror="this.src='/images/notfound.jpg'"
+                                             class="img-fluid">
+                                        <h4 style="margin-top: 20%" th:text="${boardV1.getPrice_html()}"></h4>
+                                        <p style="margin-top: 10%" class="txt_post" th:text="${boardV1.getTitle()}"></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-1">
-                    <a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#gallery_re" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -282,6 +273,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+
 <script>
     var typed = new Typed('.typed-words', {
         strings: [" 에어팟 프로", " 아이폰 11", "닌텐도 스위치", "당신이 원하는것"],

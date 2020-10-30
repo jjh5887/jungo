@@ -5,16 +5,21 @@
 <head>
 
 
-
     <meta charset="UTF-8">
     <title>중고나라 간편검색</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
     <style>
         input::placeholder {
             font-size: larger;
@@ -22,6 +27,9 @@
         input {
             font-size: xx-large;
         }
+        a:link { color: black; text-decoration: none;}
+        a:visited { color: black; text-decoration: none;}
+        a:hover { color: black; text-decoration: none;}
     </style>
 </head>
 
@@ -51,6 +59,7 @@
     </div>
 </div>
 <br>
+
 <div class="container-lg">
     <div class="row pl-lg-5 pt-lg-5">
         <div class="col-lg-2">
@@ -105,38 +114,28 @@
                 </tbody>
             </table>
         </div> <!-- 실시간 검색어 -->
-        <div class="col-lg-9 ml-lg-5 p-lg-2">
-            <div class="row">
-                <div class="col-lg-4"></div>
-                <div class="col-lg-4"><h3 class="text-center">검색결과</h3></div>
-                <div class="col-lg-4"></div>
-            </div>
-            <div class="row ml-lg-5 mt-lg-3">
-                <div th:each="boardVO : ${items}" class="card col-lg-3">
-                    <img class="card-img-top" th:src="${boardVO.getImg()}"  alt="..." style="width: 20rem">
+        <div class="col-lg-8 ml-lg-5">
+            <div class="row mt-lg-3">
+                <div th:each="boardVO : ${items}" class=" card col-lg-3 p-lg-4 m-lg-5" style="margin: auto">
+                    <a th:href="${boardVO.getAddress()}">
+                    <img class="card-img-top" th:src="${boardVO.getImg()}" onerror="this.src='images/notfound.jpg'" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${boardVO.getTitle()}">이동길 유니폼 ㅍㅍㅍ</h5>
-                        <p class="card-text" th:text="${boardVO.getPrice()}">5,000</p>
-                        <a th:href="${boardVO.getAddress()}" class="btn btn-primary">상품 보러가기</a>
+                        <h4 class="card-title mt-lg-5" th:text="${boardVO.getPrice_html()}">0,000</h4>
+                        <br>
+                        <p class="card-text" th:text="${boardVO.getTitle()}">제품</p>
                     </div>
-                </div>
-                <div class="card col-lg-3" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+                    </a>
                 </div>
             </div>
-
         </div>
+        <div class="col-lg-2"> </div>
     </div>
 </div>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item" th:if="${pageMaker.prev} == true">
-            <a class="page-link" th:href="@{/as(keyword=${keyword},page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+            <a class="page-link"
+               th:href="@{/as(keyword=${keyword},page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
         </li>
         <li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
             th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
@@ -144,87 +143,88 @@
                th:text="${idx}"></a>
         </li>
         <li th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
-            <a class="page-link" th:href="@{/as(keyword=${keyword},page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+            <a class="page-link"
+               th:href="@{/as(keyword=${keyword},page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
         </li>
     </ul>
 </nav>
-    <script src="js/typed.js"></script>
+<script src="js/typed.js"></script>
 
-    <script>
-        var typed = new Typed('.typed-words', {
-            strings: [" 에어팟 프로", " 아이폰 11", "닌텐도 스위치", "당신이 원하는것"],
-            typeSpeed: 80,
-            backSpeed: 80,
-            backDelay: 4000,
-            startDelay: 1000,
-            loop: true,
-            showCursor: true
-        });
-    </script>
-    <script>
-        (function ($) {
-            function calcStepSize(optionNode) {
-                var breakM = 990;
-                var breakS = 768;
+<script>
+    var typed = new Typed('.typed-words', {
+        strings: [" 에어팟 프로", " 아이폰 11", "닌텐도 스위치", "당신이 원하는것"],
+        typeSpeed: 80,
+        backSpeed: 80,
+        backDelay: 4000,
+        startDelay: 1000,
+        loop: true,
+        showCursor: true
+    });
+</script>
+<script>
+    (function ($) {
+        function calcStepSize(optionNode) {
+            var breakM = 990;
+            var breakS = 768;
 
-                var width = $(window).innerWidth();
+            var width = $(window).innerWidth();
 
-                if (width < breakS) {
-                    var key = 's';
-                } else if (width < breakM) {
-                    key = 'm';
-                } else {
-                    key = 'l';
+            if (width < breakS) {
+                var key = 's';
+            } else if (width < breakM) {
+                key = 'm';
+            } else {
+                key = 'l';
+            }
+            var cnt = 1 * optionNode.data("itemcount-" + key);
+            return cnt > 0 ? cnt : 1;
+        }
+
+        function repartition(container, items, count) {
+            container.children().remove();
+            for (var i = 0; i < items.length; i++) {
+                var cBlock = $('<div class="carousel-item" ></div').appendTo(container);
+                var cInnerBlock = $('<div class="row"></div>').appendTo(cBlock);
+
+                for (var j = 0; j < count; j++) {
+                    var cIdx = (i + j) % items.length;
+
+                    cInnerBlock.append($(items.get(cIdx)).clone());
                 }
-                var cnt = 1 * optionNode.data("itemcount-" + key);
-                return cnt > 0 ? cnt : 1;
             }
 
-            function repartition(container, items, count) {
-                container.children().remove();
-                for (var i = 0; i < items.length; i++) {
-                    var cBlock = $('<div class="carousel-item" ></div').appendTo(container);
-                    var cInnerBlock = $('<div class="row"></div>').appendTo(cBlock);
+            container.children().first().addClass("active");
+        }
 
-                    for (var j = 0; j < count; j++) {
-                        var cIdx = (i + j) % items.length;
+        $('.carousel.multi').each(function (idx, El) {
+            var carousel = $(El);
+            var container = carousel.find('.carousel-inner');
 
-                        cInnerBlock.append($(items.get(cIdx)).clone());
+            if (!container.children().first().hasClass('carousel-item')) {
+                var items = container.children().clone();
+
+                var lastSize = calcStepSize(carousel);
+                repartition(container, items, lastSize);
+
+                $(window).resize(function () {
+                    var cSize = calcStepSize(carousel);
+
+                    if (cSize !== lastSize) {
+                        repartition(container, items, cSize);
+                        lastSize = cSize;
                     }
-                }
-
+                });
+            } else {
                 container.children().first().addClass("active");
             }
 
-            $('.carousel.multi').each(function (idx, El) {
-                var carousel = $(El);
-                var container = carousel.find('.carousel-inner');
-
-                if (!container.children().first().hasClass('carousel-item')) {
-                    var items = container.children().clone();
-
-                    var lastSize = calcStepSize(carousel);
-                    repartition(container, items, lastSize);
-
-                    $(window).resize(function () {
-                        var cSize = calcStepSize(carousel);
-
-                        if (cSize !== lastSize) {
-                            repartition(container, items, cSize);
-                            lastSize = cSize;
-                        }
-                    });
-                } else {
-                    container.children().first().addClass("active");
-                }
-
-                carousel.carousel({
-                    interval: false
-                });
+            carousel.carousel({
+                interval: false
             });
+        });
 
-        }(jQuery));
-    </script>
+    }(jQuery));
+</script>
 </div>
 </body>
 </html>

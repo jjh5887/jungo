@@ -23,6 +23,17 @@ public class Item {
     @Column(length = 1800)
     private String img;
 
+    @Transient
+    private String price_html;
+
+    public String getPrice_html() {
+        return price_html;
+    }
+
+    public void setPrice_html(String price_html) {
+        this.price_html = price_html;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

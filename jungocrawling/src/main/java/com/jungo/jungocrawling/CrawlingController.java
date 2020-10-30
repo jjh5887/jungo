@@ -1,5 +1,7 @@
 package com.jungo.jungocrawling;
 
+import com.jungo.jungocrawling.Account.ItemRank;
+import com.jungo.jungocrawling.Account.ItemRankRepository;
 import com.jungo.jungocrawling.Account.ItemRepository;
 import com.jungo.jungocrawling.Account.Item;
 import com.jungo.jungocrawling.utils.Criteria;
@@ -10,18 +12,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CrawlingController {
 
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
     @Autowired
     ItemRepository itemRepository;
+
+    @Autowired
+    ItemRankRepository itemRankRepository;
+
 
     @RequestMapping(value = "/")
     public String home(Model model){
         List<Item> list1 = itemRepository.findByHomeone();
         List<Item> list2 = itemRepository.findByHometwo();
+        for (int i = 0; i < list1.size(); i++){
+            list1.get(i).setPrice_html(decimalFormat.format(list1.get(i).getPrice()));
+        }
+        for (int i = 0; i < list2.size(); i++){
+            list2.get(i).setPrice_html(decimalFormat.format(list2.get(i).getPrice()));
+        }
         model.addAttribute("list1",list1);
         model.addAttribute("list2",list2);
         model.addAttribute("login", true);
@@ -38,7 +54,22 @@ public class CrawlingController {
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(count);
         System.out.println(cri.getPage());
-        List<Item> item = itemRepository.findByTitleContainsOrderByIdDesc(keyword, PageRequest.of(cri.getPage() - 1, 9));
+        List<Item> item = itemRepository.findByTitleContainsOrderByIdDesc(keyword, PageRequest.of(cri.getPage() - 1, 12));
+        for (int i = 0; i < item.size(); i++){
+            item.get(i).setPrice_html(decimalFormat.format(item.get(i).getPrice()));
+        }
+        Optional<ItemRank> title = itemRankRepository.findByTitle(keyword);
+
+
+        if (title.isEmpty()){
+            ItemRank itemRank = new ItemRank();
+            itemRank.setCount(0);
+            itemRank.setTitle(keyword);
+            itemRankRepository.save(itemRank);
+        } else {
+            title.get().setCount(title.get().getCount() + 1);
+            itemRankRepository.save(title.get());
+        }
 
         model.addAttribute("items", item);
         model.addAttribute("pageMaker", pageMaker);
