@@ -13,6 +13,25 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script>
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:7777/rank',
+                    success: function (json) {
+                        var list = $.parseJSON(json);
+                        var listLen = list.length;
+                        var contentStr = "";
+                        for (var i = 0; i < listLen; i++) {
+                            contentStr += list[i].title + "</br>";
+                        }
+                        $("#before").append(json);
+                        $("#after").append(contentStr);
+                    }
+                });
+
+
+    </script>
     <style>
         input::placeholder {
             font-size: larger;
@@ -50,7 +69,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 3; /* 라인수 */
             -webkit-box-orient: vertical;
-            word-wrap:break-word;
+            word-wrap: break-word;
             line-height: 1.2em;
             height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
         }
@@ -82,7 +101,11 @@
     </div>
 </div>
 
-
+<div class="before" id="before">asdasdasdasdasdsad</div>
+<br>
+<br>
+<br>
+<div class="after"></div>
 <br>
 <br>
 <br>
@@ -275,6 +298,36 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
 
+<script>
+    $(function () {
+        $.ajax({
+            url: "data.json",
+            dataType: "json",
+            success: function (data) { //json 데이터를 반환 받음
+                if (data.length > 0) {//데이터가 있으면
+                    //테이블 태그가 담긴 객체 생성
+                    var tb = $("<table/>");
+                    for (var i in data) {//데이터를 하나씩 뽑아냄
+                        var $id = data[i].id;
+                        //i번째 data 중 key가 name인 것의 value
+                        var $name = data[i].name;
+                        //<tr>태그 객체 생성
+                        var row = $("<tr/>").append(
+                            //아래의 값을 <tr></tr>안에 삽입
+                            $("<td/>").text($id);
+                        $("<td/>").text($name);
+                    )
+                        ;
+                        //<table></table>안에 <tr></tr>넣기
+                        tb.append(row);
+                    }
+                    //클래스가 wrap인 태그 안에 작성된 table 코드 집어넣기
+                    $(".wrap").append(tb);
+                }
+            }
+        })
+    })
+</script>
 <script>
     var typed = new Typed('.typed-words', {
         strings: [" 에어팟 프로", " 아이폰 11", "닌텐도 스위치", "당신이 원하는것"],

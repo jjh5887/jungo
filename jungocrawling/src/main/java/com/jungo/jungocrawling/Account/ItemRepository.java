@@ -28,8 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByTitleContainsOrderByIdDesc(String title, Pageable pageable);
 
-
-    List<Item> findAllById(Long id);
+    long countByTitleContains(String title);
 
     @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') ORDER BY price")
     List<Item> findByASC(String keyword);
