@@ -7,7 +7,9 @@ import com.jungo.jungocrawling.Account.Item;
 import com.jungo.jungocrawling.utils.Criteria;
 import com.jungo.jungocrawling.utils.PageMaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,8 +48,17 @@ public class CrawlingController {
 
     @RequestMapping(value = "/as", method = RequestMethod.GET)
     public String jungocrawling(Model model, @RequestParam("keyword") String keyword, @ModelAttribute("cri") Criteria cri){
-        int count;
-        count = itemRepository.getCount(keyword);
+        int count = -1;
+        //int buf = 0;
+        //int count_buf = 0;
+        //while (count != 0){
+        //    count_buf = count;
+        //    count = itemRepository.countByTitleContains(keyword, PageRequest.of(buf,100));
+       //     buf++;
+       // }
+      //  count = count_buf + ((buf - 1) * 100);
+        count = itemRepository.countByTitleContains(keyword);
+
         if (count == 0)
             return "noItem";
         PageMaker pageMaker = new PageMaker();
@@ -59,8 +70,6 @@ public class CrawlingController {
             item.get(i).setPrice_html(decimalFormat.format(item.get(i).getPrice()));
         }
         Optional<ItemRank> title = itemRankRepository.findByTitle(keyword);
-
-
         if (title.isEmpty()){
             ItemRank itemRank = new ItemRank();
             itemRank.setCount(0);

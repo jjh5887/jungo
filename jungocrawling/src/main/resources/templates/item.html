@@ -3,33 +3,129 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       data-layout-decorate="~{samples/layout/sampleLayout}">
 <head>
-
-
     <meta charset="UTF-8">
     <title>중고나라 간편검색</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+
     <style>
         input::placeholder {
             font-size: larger;
         }
+
         input {
             font-size: xx-large;
         }
-        a:link { color: black; text-decoration: none;}
-        a:visited { color: black; text-decoration: none;}
-        a:hover { color: black; text-decoration: none;}
+
+        a:link {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        .rolling_box {
+            width: 300px;
+            height: 40px;
+            text-align: center;
+        }
+
+        .rolling_box ul {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rolling_box ul li {
+            width: 100%;
+            height: 100%;
+            transition: .5s;
+            position: absolute;
+            top: 100%;
+            z-index: 1;
+        }
+
+        .card_sliding {
+            top: 0 !important;
+            z-index: 100 !important;
+        }
+
+        .rolling_box ul li p {
+            font-size: 20px;
+            line-height: 40px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        :root {
+            --pink: #ec4989;
+            --dark-pink: #a12355;
+            --light-grey: #f3f3f3;
+            --dark-grey: #cecece;
+            --heart-size: 1rem;
+        }
+
+        .heart {
+            width: var(--heart-size);
+            height: var(--heart-size);
+            transform: rotate(45deg);
+            background: var(--dark-grey);
+            position: relative;
+            display: flex;
+            transition: 0.2s ease-in;
+        }
+
+        .button:hover > .heart {
+            background: var(--pink);
+        }
+
+        .button:active > .heart {
+            background: white;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            position: absolute;
+        }
+
+        .heart::before {
+            left: -50%;
+        }
+
+        .heart::after {
+            top: -50%;
+        }
+
+
     </style>
 </head>
 
@@ -43,10 +139,12 @@
 </nav>
 
 <div class="container">
-    <div class="mt-5 text-center pt-5">
-        <h1>검색해보세요</h1><br>
-        <h1><span class="typed-words"></span></h1>
-    </div>
+    <a href="/">
+        <div class="mt-5 text-center pt-5">
+            <h1>검색해보세요</h1><br>
+            <h1><span class="typed-words"></span></h1>
+        </div>
+    </a>
     <div class="mt-5 justify-content-center">
         <form class="form-inline" action="/as" method="get" id="searchitem">
             <div style="width: 15%;"></div>
@@ -60,75 +158,209 @@
 </div>
 <br>
 
-<div class="container-lg">
+<div class="container-md">
     <div class="row pl-lg-5 pt-lg-5">
-        <div class="col-lg-2">
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <p>
-                    <td colspan="2">실시간 검색어</td>
-                    </p>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="col" style="width: 10%;">1</th>
-                    <th scope="col">ㅁㄴㅇㅁㄴㅇ</th>
-                </tr>
-                <tr>
-                    <th scope="row"> 2</th>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 3</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 4</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 5</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 6</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 7</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row"> 8</th>
-                    <td>Larry</td>
-                <tr>
-                    <th scope="row"> 9</th>
-                    <td>Larry</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td>Larry</td>
-                </tr>
-                </tbody>
-            </table>
-        </div> <!-- 실시간 검색어 -->
-        <div class="col-lg-8 ml-lg-5">
-            <div class="row mt-lg-3">
-                <div th:each="boardVO : ${items}" class=" card col-lg-3 p-lg-4 m-lg-5" style="margin: auto">
-                    <a th:href="${boardVO.getAddress()}">
-                    <img class="card-img-top" th:src="${boardVO.getImg()}" onerror="this.src='images/notfound.jpg'" alt="...">
-                    <div class="card-body">
-                        <h4 class="card-title mt-lg-5" th:text="${boardVO.getPrice_html()}">0,000</h4>
-                        <br>
-                        <p class="card-text" th:text="${boardVO.getTitle()}">제품</p>
+        <div class="col-md-auto">
+            <div class="col-md-auto">
+                <div class="row">
+                    <h3 style="margin: auto">실시간 검색어</h3>
+                </div>
+                <a id="one">
+                    <div class="row mt-5">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;1</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_one">
+                                <li class="card_sliding" id="first_one"><p></p></li>
+                                <li class="" id="second_one"><p></p></li>
+                                <li class="" id="third_one"><p></p></li>
+                            </ul>
+                        </div>
                     </div>
+                </a>
+
+                <a id="two">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;2</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_two">
+                                <li class="card_sliding" id="first_two"><p></p></li>
+                                <li class="" id="second_two"><p></p></li>
+                                <li class="" id="third_two"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a id="three">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;3</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_three">
+                                <li class="card_sliding" id="first_three"><p></p></li>
+                                <li class="" id="second_three"><p></p></li>
+                                <li class="" id="third_three"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+
+                <a id="four">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;4</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_four">
+                                <li class="card_sliding" id="first_four"><p></p></li>
+                                <li class="" id="second_four"><p></p></li>
+                                <li class="" id="third_four"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+
+                <a id="five">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;5</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_five">
+                                <li class="card_sliding" id="first_five"><p></p></li>
+                                <li class="" id="second_five"><p></p></li>
+                                <li class="" id="third_five"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+
+                <a id="six">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;6</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_six">
+                                <li class="card_sliding" id="first_six"><p></p></li>
+                                <li class="" id="second_six"><p></p></li>
+                                <li class="" id="third_six"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a id="seven">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;7</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_seven">
+                                <li class="card_sliding" id="first_seven"><p></p></li>
+                                <li class="" id="second_seven"><p></p></li>
+                                <li class="" id="third_seven"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a id="eight">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;8</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_eight">
+                                <li class="card_sliding" id="first_eight"><p></p></li>
+                                <li class="" id="second_eight"><p></p></li>
+                                <li class="" id="third_eight"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a id="nine">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>&nbsp;9</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_nine">
+                                <li class="card_sliding" id="first_nine"><p></p></li>
+                                <li class="" id="second_nine"><p></p></li>
+                                <li class="" id="third_nine"><p></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a id="ten">
+                    <div class="row mt-2">
+                        <div class="col-md-1 mt-1">
+                            <h4>10</h4>
+                        </div>
+                        <div class="rolling_box col-md-auto">
+                            <ul id="rolling_box_ten">
+                                <li class="card_sliding" id="first_ten"><p></p></li>
+                                <li class="" id="second_ten"><p></p></li>
+                                <li class="" id="third_ten"><p></p></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row mt-lg-3">
+                <div th:each="boardVO : ${items}" class=" card col-lg-3 p-lg-4 mr-lg-5 mt-lg-5 mb-lg-5"
+                     style="margin: auto">
+                    <a th:href="${boardVO.getAddress()}">
+                        <img class="card-img-top" th:src="${boardVO.getImg()}" onerror="this.src='images/notfound.jpg'"
+                             alt="...">
                     </a>
+                    <div class="card-body">
+                        <div class="row" style="height: auto">
+                            <div class="col">
+                                <h4 class="card-title" style="margin-top: 13%" th:text="${boardVO.getPrice_html()}">
+                                    0,000</h4>
+                            </div>
+                            <div class="col">
+                                <a th:onclick="" data-toggle="modal" data-target="#exampleModal" class="button"><span class="heart"
+                                                                                                        style="margin-top: 20%; float: right"></span></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="card-text mt-3" th:text="${boardVO.getTitle()}">제품</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-2"> </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">즐겨찾기 추가</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br>
+            <div class="modal-body">
+                즐겨찾기에 추가하시겠습니까?
+            </div>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">예</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+            </div>
+        </div>
     </div>
 </div>
 <nav aria-label="Page navigation example">
@@ -149,7 +381,6 @@
     </ul>
 </nav>
 <script src="js/typed.js"></script>
-
 <script>
     var typed = new Typed('.typed-words', {
         strings: [" 에어팟 프로", " 아이폰 11", "닌텐도 스위치", "당신이 원하는것"],
@@ -183,7 +414,7 @@
         function repartition(container, items, count) {
             container.children().remove();
             for (var i = 0; i < items.length; i++) {
-                var cBlock = $('<div class="carousel-item" ></div').appendTo(container);
+                var cBlock = $('<div class="carousel-item" ></div>').appendTo(container);
                 var cInnerBlock = $('<div class="row"></div>').appendTo(cBlock);
 
                 for (var j = 0; j < count; j++) {
@@ -225,6 +456,741 @@
 
     }(jQuery));
 </script>
-</div>
+<script>
+    let rollingData_one = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_two = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_three = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_four = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_five = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_six = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_seven = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_eight = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_nine = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    let rollingData_ten = [
+        'no search',
+        'no search'
+    ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
+    function a() {
+        $.ajax({
+            url: 'http://localhost:7777/rank',
+            type: 'GET',
+            success: function (data) {
+                var i = 0;
+                $.each(data, function () {
+                    if (i === 0) {
+                        rollingData_one[0] = this["title"];
+                        rollingData_one[1] = this["title"];
+                        first_one.children[0].innerHTML = rollingData_one[0];
+                        document.getElementById("one").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 1) {
+                        rollingData_two[0] = this["title"];
+                        rollingData_two[1] = this["title"];
+                        first_two.children[0].innerHTML = rollingData_two[0];
+                        document.getElementById("two").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 2) {
+                        rollingData_three[0] = this["title"];
+                        rollingData_three[1] = this["title"];
+                        first_three.children[0].innerHTML = rollingData_three[0];
+                        document.getElementById("three").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 3) {
+                        rollingData_four[0] = this["title"];
+                        rollingData_four[1] = this["title"];
+                        first_four.children[0].innerHTML = this["title"];
+                        document.getElementById("four").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 4) {
+                        rollingData_five[0] = this["title"];
+                        rollingData_five[1] = this["title"];
+                        first_five.children[0].innerHTML = this["title"];
+                        document.getElementById("five").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 5) {
+                        rollingData_six[0] = this["title"];
+                        rollingData_six[1] = this["title"];
+                        first_six.children[0].innerHTML = this["title"];
+                        document.getElementById("six").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 6) {
+                        rollingData_seven[0] = this["title"];
+                        rollingData_seven[1] = this["title"];
+                        first_seven.children[0].innerHTML = this["title"];
+                        document.getElementById("seven").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 7) {
+                        rollingData_eight[0] = this["title"];
+                        rollingData_eight[1] = this["title"];
+                        first_eight.children[0].innerHTML = this["title"];
+                        document.getElementById("eight").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 8) {
+                        rollingData_nine[0] = this["title"];
+                        rollingData_nine[1] = this["title"];
+                        first_nine.children[0].innerHTML = this["title"];
+                        document.getElementById("nine").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    if (i === 9) {
+                        rollingData_ten[0] = this["title"];
+                        rollingData_ten[1] = this["title"];
+                        first_ten.children[0].innerHTML = this["title"];
+                        document.getElementById("ten").href = "http://localhost:7777/as?keyword=" + this["title"];
+                    }
+                    i++;
+                })
+
+            }
+        });
+    }
+
+    a();
+    setInterval(a, 10000);
+
+    let timer_one = 10000 // 롤링되는 주기 입니다 (1000 => 1초)
+    let first_one = document.getElementById('first_one'),
+        second_one = document.getElementById('second_one'),
+        third_one = document.getElementById('third_one')
+    let move_one = 2
+    let dataCnt_one = 1
+    let listCnt_one = 1
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+    setInterval(() => {
+        if (move_one === 2) {
+            first_one.classList.remove('card_sliding')
+            first_one.classList.add('card_sliding_after')
+            second_one.classList.remove('card_sliding_after')
+            second_one.classList.add('card_sliding')
+            third_one.classList.remove('card_sliding_after')
+            third_one.classList.remove('card_sliding')
+            move_one = 0
+        } else if (move_one === 1) {
+            first_one.classList.remove('card_sliding_after')
+            first_one.classList.add('card_sliding')
+            second_one.classList.remove('card_sliding_after')
+            second_one.classList.remove('card_sliding')
+            third_one.classList.remove('card_sliding')
+            third_one.classList.add('card_sliding_after')
+
+            move_one = 2
+        } else if (move_one === 0) {
+            first_one.classList.remove('card_sliding_after')
+            first_one.classList.remove('card_sliding')
+            second_one.classList.remove('card_sliding')
+            second_one.classList.add('card_sliding_after')
+            third_one.classList.remove('card_sliding_after')
+            third_one.classList.add('card_sliding')
+            move_one = 1
+        }
+
+        if (dataCnt_one < (rollingData_one.length - 1)) {
+            document.getElementById('rolling_box_one').children[listCnt_one].children[0].innerHTML = rollingData_one[dataCnt_one]
+            dataCnt_one++
+        } else if (dataCnt_one === rollingData_one.length - 1) {
+            document.getElementById('rolling_box_one').children[listCnt_one].children[0].innerHTML = rollingData_one[dataCnt_one]
+            dataCnt_one = 0
+        }
+        if (listCnt_one < 2) {
+            listCnt_one++
+        } else if (listCnt_one === 2) {
+            listCnt_one = 0
+        }
+
+    }, timer_one);
+
+
+    let first_two = document.getElementById('first_two'),
+        second_two = document.getElementById('second_two'),
+        third_two = document.getElementById('third_two')
+    let move_two = 2
+    let dataCnt_two = 1
+    let listCnt_two = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+    setTimeout(function () {
+        setInterval(() => {
+
+            if (move_two === 2) {
+                first_two.classList.remove('card_sliding')
+                first_two.classList.add('card_sliding_after')
+                second_two.classList.remove('card_sliding_after')
+                second_two.classList.add('card_sliding')
+                third_two.classList.remove('card_sliding_after')
+                third_two.classList.remove('card_sliding')
+                move_two = 0
+            } else if (move_two === 1) {
+                first_two.classList.remove('card_sliding_after')
+
+                first_two.classList.add('card_sliding')
+                second_two.classList.remove('card_sliding_after')
+
+                second_two.classList.remove('card_sliding')
+                third_two.classList.remove('card_sliding')
+
+                third_two.classList.add('card_sliding_after')
+                move_two = 2
+            } else if (move_two === 0) {
+                first_two.classList.remove('card_sliding_after')
+
+                first_two.classList.remove('card_sliding')
+                second_two.classList.remove('card_sliding')
+
+                second_two.classList.add('card_sliding_after')
+                third_two.classList.remove('card_sliding_after')
+
+                third_two.classList.add('card_sliding')
+                move_two = 1
+
+            }
+            if (dataCnt_two < (rollingData_two.length - 1)) {
+                document.getElementById('rolling_box_two').children[listCnt_two].children[0].innerHTML = rollingData_two[dataCnt_two]
+                dataCnt_two++
+            } else if (dataCnt_two === rollingData_two.length - 1) {
+                document.getElementById('rolling_box_two').children[listCnt_two].children[0].innerHTML = rollingData_two[dataCnt_two]
+                dataCnt_two = 0
+
+            }
+            if (listCnt_two < 2) {
+                listCnt_two++
+            } else if (listCnt_two === 2) {
+                listCnt_two = 0
+            }
+        }, timer_one)
+    }, 500);
+
+
+    let timer_three = timer_one + 1000 // 롤링되는 주기 입니다 (1000 => 1초)
+    let first_three = document.getElementById('first_three'),
+        second_three = document.getElementById('second_three'),
+        third_three = document.getElementById('third_three')
+    let move_three = 2
+    let dataCnt_three = 1
+    let listCnt_three = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_three.children[0].innerHTML = rollingData_three[0];
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_three === 2) {
+                first_three.classList.remove('card_sliding')
+                first_three.classList.add('card_sliding_after')
+                second_three.classList.remove('card_sliding_after')
+                second_three.classList.add('card_sliding')
+                third_three.classList.remove('card_sliding_after')
+                third_three.classList.remove('card_sliding')
+                move_three = 0
+            } else if (move_three === 1) {
+                first_three.classList.remove('card_sliding_after')
+                first_three.classList.add('card_sliding')
+
+                second_three.classList.remove('card_sliding_after')
+                second_three.classList.remove('card_sliding')
+
+                third_three.classList.remove('card_sliding')
+                third_three.classList.add('card_sliding_after')
+
+                move_three = 2
+            } else if (move_three === 0) {
+                first_three.classList.remove('card_sliding_after')
+                first_three.classList.remove('card_sliding')
+
+                second_three.classList.remove('card_sliding')
+                second_three.classList.add('card_sliding_after')
+
+                third_three.classList.remove('card_sliding_after')
+                third_three.classList.add('card_sliding')
+
+                move_three = 1
+            }
+
+            if (dataCnt_three < (rollingData_three.length - 1)) {
+                document.getElementById('rolling_box_three').children[listCnt_three].children[0].innerHTML = rollingData_three[dataCnt_three]
+                dataCnt_three++
+            } else if (dataCnt_three === rollingData_three.length - 1) {
+                document.getElementById('rolling_box_three').children[listCnt_three].children[0].innerHTML = rollingData_three[dataCnt_three]
+                dataCnt_three = 0
+            }
+
+            if (listCnt_three < 2) {
+                listCnt_three++
+            } else if (listCnt_three === 2) {
+                listCnt_three = 0
+            }
+
+        }, timer_one)
+    }, 1000);
+
+
+    let first_four = document.getElementById('first_four'),
+        second_four = document.getElementById('second_four'),
+        third_four = document.getElementById('third_four')
+    let move_four = 2
+    let dataCnt_four = 1
+    let listCnt_four = 1
+
+    first_four.children[0].innerHTML = rollingData_four[0];
+
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_four === 2) {
+                first_four.classList.remove('card_sliding')
+                first_four.classList.add('card_sliding_after')
+                second_four.classList.remove('card_sliding_after')
+                second_four.classList.add('card_sliding')
+                third_four.classList.remove('card_sliding_after')
+                third_four.classList.remove('card_sliding')
+                move_four = 0
+            } else if (move_four === 1) {
+                first_four.classList.remove('card_sliding_after')
+                first_four.classList.add('card_sliding')
+
+                second_four.classList.remove('card_sliding_after')
+                second_four.classList.remove('card_sliding')
+
+                third_four.classList.remove('card_sliding')
+                third_four.classList.add('card_sliding_after')
+
+                move_four = 2
+            } else if (move_four === 0) {
+                first_four.classList.remove('card_sliding_after')
+                first_four.classList.remove('card_sliding')
+
+                second_four.classList.remove('card_sliding')
+                second_four.classList.add('card_sliding_after')
+
+                third_four.classList.remove('card_sliding_after')
+                third_four.classList.add('card_sliding')
+
+                move_four = 1
+            }
+
+            if (dataCnt_four < (rollingData_four.length - 1)) {
+                document.getElementById('rolling_box_four').children[listCnt_four].children[0].innerHTML = rollingData_four[dataCnt_four]
+                dataCnt_four++
+            } else if (dataCnt_four === rollingData_four.length - 1) {
+                document.getElementById('rolling_box_four').children[listCnt_four].children[0].innerHTML = rollingData_four[dataCnt_four]
+                dataCnt_four = 0
+            }
+
+            if (listCnt_four < 2) {
+                listCnt_four++
+            } else if (listCnt_four === 2) {
+                listCnt_four = 0
+            }
+
+        }, timer_one)
+    }, 1500);
+
+
+    let first_five = document.getElementById('first_five'),
+        second_five = document.getElementById('second_five'),
+        third_five = document.getElementById('third_five')
+    let move_five = 2
+    let dataCnt_five = 1
+    let listCnt_five = 1
+
+    first_five.children[0].innerHTML = rollingData_five[0];
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_five === 2) {
+                first_five.classList.remove('card_sliding')
+                first_five.classList.add('card_sliding_after')
+                second_five.classList.remove('card_sliding_after')
+                second_five.classList.add('card_sliding')
+                third_five.classList.remove('card_sliding_after')
+                third_five.classList.remove('card_sliding')
+                move_five = 0
+            } else if (move_five === 1) {
+                first_five.classList.remove('card_sliding_after')
+                first_five.classList.add('card_sliding')
+
+                second_five.classList.remove('card_sliding_after')
+                second_five.classList.remove('card_sliding')
+
+                third_five.classList.remove('card_sliding')
+                third_five.classList.add('card_sliding_after')
+
+                move_five = 2
+            } else if (move_five === 0) {
+                first_five.classList.remove('card_sliding_after')
+                first_five.classList.remove('card_sliding')
+
+                second_five.classList.remove('card_sliding')
+                second_five.classList.add('card_sliding_after')
+
+                third_five.classList.remove('card_sliding_after')
+                third_five.classList.add('card_sliding')
+                move_five = 1
+            }
+
+            if (dataCnt_five < (rollingData_five.length - 1)) {
+                document.getElementById('rolling_box_five').children[listCnt_five].children[0].innerHTML = rollingData_five[dataCnt_five]
+                dataCnt_five++
+            } else if (dataCnt_five === rollingData_five.length - 1) {
+                document.getElementById('rolling_box_five').children[listCnt_five].children[0].innerHTML = rollingData_five[dataCnt_five]
+                dataCnt_five = 0
+            }
+
+            if (listCnt_five < 2) {
+                listCnt_five++
+            } else if (listCnt_five === 2) {
+                listCnt_five = 0
+            }
+
+        }, timer_one)
+    }, 2000);
+
+
+    let first_six = document.getElementById('first_six'),
+        second_six = document.getElementById('second_six'),
+        third_six = document.getElementById('third_six')
+    let move_six = 2
+    let dataCnt_six = 1
+    let listCnt_six = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_six.children[0].innerHTML = rollingData_six[0]
+
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_six === 2) {
+                first_six.classList.remove('card_sliding')
+                first_six.classList.add('card_sliding_after')
+                second_six.classList.remove('card_sliding_after')
+                second_six.classList.add('card_sliding')
+                third_six.classList.remove('card_sliding_after')
+                third_six.classList.remove('card_sliding')
+                move_six = 0
+            } else if (move_six === 1) {
+                first_six.classList.remove('card_sliding_after')
+                first_six.classList.add('card_sliding')
+
+                second_six.classList.remove('card_sliding_after')
+                second_six.classList.remove('card_sliding')
+
+                third_six.classList.remove('card_sliding')
+                third_six.classList.add('card_sliding_after')
+
+                move_six = 2
+            } else if (move_six === 0) {
+                first_six.classList.remove('card_sliding_after')
+                first_six.classList.remove('card_sliding')
+                second_six.classList.remove('card_sliding')
+                second_six.classList.add('card_sliding_after')
+                third_six.classList.remove('card_sliding_after')
+                third_six.classList.add('card_sliding')
+                move_six = 1
+            }
+
+            if (dataCnt_six < (rollingData_six.length - 1)) {
+                document.getElementById('rolling_box_six').children[listCnt_six].children[0].innerHTML = rollingData_six[dataCnt_six]
+                dataCnt_six++
+            } else if (dataCnt_six === rollingData_six.length - 1) {
+                document.getElementById('rolling_box_six').children[listCnt_six].children[0].innerHTML = rollingData_six[dataCnt_six]
+                dataCnt_six = 0
+            }
+
+            if (listCnt_six < 2) {
+                listCnt_six++
+            } else if (listCnt_six === 2) {
+                listCnt_six = 0
+            }
+
+        }, timer_one)
+    }, 2500);
+
+
+    let first_seven = document.getElementById('first_seven'),
+        second_seven = document.getElementById('second_seven'),
+        third_seven = document.getElementById('third_seven')
+    let move_seven = 2
+    let dataCnt_seven = 1
+    let listCnt_seven = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_seven.children[0].innerHTML = rollingData_seven[0]
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_seven === 2) {
+                first_seven.classList.remove('card_sliding')
+                first_seven.classList.add('card_sliding_after')
+                second_seven.classList.remove('card_sliding_after')
+                second_seven.classList.add('card_sliding')
+                third_seven.classList.remove('card_sliding_after')
+                third_seven.classList.remove('card_sliding')
+                move_seven = 0
+            } else if (move_seven === 1) {
+                first_seven.classList.remove('card_sliding_after')
+                first_seven.classList.add('card_sliding')
+
+                second_seven.classList.remove('card_sliding_after')
+                second_seven.classList.remove('card_sliding')
+
+                third_seven.classList.remove('card_sliding')
+                third_seven.classList.add('card_sliding_after')
+
+                move_seven = 2
+            } else if (move_seven === 0) {
+                first_seven.classList.remove('card_sliding_after')
+                first_seven.classList.remove('card_sliding')
+
+                second_seven.classList.remove('card_sliding')
+                second_seven.classList.add('card_sliding_after')
+
+                third_seven.classList.remove('card_sliding_after')
+                third_seven.classList.add('card_sliding')
+
+                move_seven = 1
+            }
+
+            if (dataCnt_seven < (rollingData_seven.length - 1)) {
+                document.getElementById('rolling_box_seven').children[listCnt_seven].children[0].innerHTML = rollingData_seven[dataCnt_seven]
+                dataCnt_seven++
+            } else if (dataCnt_seven === rollingData_seven.length - 1) {
+                document.getElementById('rolling_box_seven').children[listCnt_seven].children[0].innerHTML = rollingData_seven[dataCnt_seven]
+                dataCnt_seven = 0
+            }
+
+            if (listCnt_seven < 2) {
+                listCnt_seven++
+            } else if (listCnt_seven === 2) {
+                listCnt_seven = 0
+            }
+
+        }, timer_one)
+    }, 3000);
+
+
+    let first_eight = document.getElementById('first_eight'),
+        second_eight = document.getElementById('second_eight'),
+        third_eight = document.getElementById('third_eight')
+    let move_eight = 2
+    let dataCnt_eight = 1
+    let listCnt_eight = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_eight.children[0].innerHTML = rollingData_eight[0]
+    setTimeout(function () {
+        setInterval(() => {
+
+            if (move_eight === 2) {
+                first_eight.classList.remove('card_sliding')
+                first_eight.classList.add('card_sliding_after')
+                second_eight.classList.remove('card_sliding_after')
+                second_eight.classList.add('card_sliding')
+                third_eight.classList.remove('card_sliding_after')
+                third_eight.classList.remove('card_sliding')
+                move_eight = 0
+            } else if (move_eight === 1) {
+                first_eight.classList.remove('card_sliding_after')
+                first_eight.classList.add('card_sliding')
+
+                second_eight.classList.remove('card_sliding_after')
+                second_eight.classList.remove('card_sliding')
+
+                third_eight.classList.remove('card_sliding')
+                third_eight.classList.add('card_sliding_after')
+
+                move_eight = 2
+            } else if (move_eight === 0) {
+                first_eight.classList.remove('card_sliding_after')
+                first_eight.classList.remove('card_sliding')
+
+                second_eight.classList.remove('card_sliding')
+                second_eight.classList.add('card_sliding_after')
+
+                third_eight.classList.remove('card_sliding_after')
+                third_eight.classList.add('card_sliding')
+
+                move_eight = 1
+            }
+
+            if (dataCnt_eight < (rollingData_eight.length - 1)) {
+                document.getElementById('rolling_box_eight').children[listCnt_eight].children[0].innerHTML = rollingData_eight[dataCnt_eight]
+                dataCnt_eight++
+            } else if (dataCnt_eight === rollingData_eight.length - 1) {
+                document.getElementById('rolling_box_eight').children[listCnt_eight].children[0].innerHTML = rollingData_eight[dataCnt_eight]
+                dataCnt_eight = 0
+            }
+
+            if (listCnt_eight < 2) {
+                listCnt_eight++
+            } else if (listCnt_eight === 2) {
+                listCnt_eight = 0
+            }
+
+        }, timer_one)
+    }, 3500);
+
+
+    let first_nine = document.getElementById('first_nine'),
+        second_nine = document.getElementById('second_nine'),
+        third_nine = document.getElementById('third_nine')
+    let move_nine = 2
+    let dataCnt_nine = 1
+    let listCnt_nine = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_nine.children[0].innerHTML = rollingData_nine[0]
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_nine === 2) {
+                first_nine.classList.remove('card_sliding')
+                first_nine.classList.add('card_sliding_after')
+                second_nine.classList.remove('card_sliding_after')
+                second_nine.classList.add('card_sliding')
+                third_nine.classList.remove('card_sliding_after')
+                third_nine.classList.remove('card_sliding')
+                move_nine = 0
+            } else if (move_nine === 1) {
+                first_nine.classList.remove('card_sliding_after')
+                first_nine.classList.add('card_sliding')
+
+                second_nine.classList.remove('card_sliding_after')
+                second_nine.classList.remove('card_sliding')
+
+                third_nine.classList.remove('card_sliding')
+                third_nine.classList.add('card_sliding_after')
+
+                move_nine = 2
+            } else if (move_nine === 0) {
+                first_nine.classList.remove('card_sliding_after')
+                first_nine.classList.remove('card_sliding')
+
+                second_nine.classList.remove('card_sliding')
+                second_nine.classList.add('card_sliding_after')
+
+                third_nine.classList.remove('card_sliding_after')
+                third_nine.classList.add('card_sliding')
+
+                move_nine = 1
+            }
+
+            if (dataCnt_nine < (rollingData_nine.length - 1)) {
+                document.getElementById('rolling_box_nine').children[listCnt_nine].children[0].innerHTML = rollingData_nine[dataCnt_nine]
+                dataCnt_nine++
+            } else if (dataCnt_nine === rollingData_nine.length - 1) {
+                document.getElementById('rolling_box_nine').children[listCnt_nine].children[0].innerHTML = rollingData_nine[dataCnt_nine]
+                dataCnt_nine = 0
+            }
+
+            if (listCnt_nine < 2) {
+                listCnt_nine++
+            } else if (listCnt_nine === 2) {
+                listCnt_nine = 0
+            }
+
+        }, timer_one)
+    }, 4000);
+
+
+    let first_ten = document.getElementById('first_ten'),
+        second_ten = document.getElementById('second_ten'),
+        third_ten = document.getElementById('third_ten')
+    let move_ten = 2
+    let dataCnt_ten = 1
+    let listCnt_ten = 1
+
+
+    //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
+
+
+    first_ten.children[0].innerHTML = rollingData_ten[0]
+    setTimeout(function () {
+        setInterval(() => {
+            if (move_ten === 2) {
+                first_ten.classList.remove('card_sliding')
+                first_ten.classList.add('card_sliding_after')
+                second_ten.classList.remove('card_sliding_after')
+                second_ten.classList.add('card_sliding')
+                third_ten.classList.remove('card_sliding_after')
+                third_ten.classList.remove('card_sliding')
+                move_ten = 0
+            } else if (move_ten === 1) {
+                first_ten.classList.remove('card_sliding_after')
+                first_ten.classList.add('card_sliding')
+
+                second_ten.classList.remove('card_sliding_after')
+                second_ten.classList.remove('card_sliding')
+
+                third_ten.classList.remove('card_sliding')
+                third_ten.classList.add('card_sliding_after')
+
+                move_ten = 2
+            } else if (move_ten === 0) {
+                first_ten.classList.remove('card_sliding_after')
+                first_ten.classList.remove('card_sliding')
+
+                second_ten.classList.remove('card_sliding')
+                second_ten.classList.add('card_sliding_after')
+
+                third_ten.classList.remove('card_sliding_after')
+                third_ten.classList.add('card_sliding')
+
+                move_ten = 1
+            }
+
+            if (dataCnt_ten < (rollingData_ten.length - 1)) {
+                document.getElementById('rolling_box_ten').children[listCnt_ten].children[0].innerHTML = rollingData_ten[dataCnt_ten]
+                dataCnt_ten++
+            } else if (dataCnt_ten === rollingData_ten.length - 1) {
+                document.getElementById('rolling_box_ten').children[listCnt_ten].children[0].innerHTML = rollingData_ten[dataCnt_ten]
+                dataCnt_ten = 0
+            }
+
+            if (listCnt_ten < 2) {
+                listCnt_ten++
+            } else if (listCnt_ten === 2) {
+                listCnt_ten = 0
+            }
+
+        }, timer_one)
+    }, 4500);
+</script>
 </body>
 </html>

@@ -81,6 +81,7 @@ class ItemRepositoryTest {
         item.setTitle("tem four");
         itemRepository.save(item);
 
+
         List<Item> items = itemRepository.findByTitleContainsOrderByPriceDesc("item", PageRequest.of(0, 10));
         for (int i = 0; i < items.size(); i++){
             System.out.println(items.get(i).getTitle());
