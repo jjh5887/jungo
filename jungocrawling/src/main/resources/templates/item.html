@@ -133,8 +133,20 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand"></a>
     <div>
-        <button class="btn btn-outline-secondary mr-sm-1"> 로그인</button>
-        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"> 회원가입</button>
+        <div th:if="${!login}">
+            <button class="btn btn-outline-secondary mr-sm-1"
+                    onclick="location.href='/login.html'"> 로그인
+            </button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0"
+                    onclick="location.href='/regist.html'" type="submit"> 회원가입
+            </button>
+        </div>
+        <div th:if="${login}">
+            <span class="mr-sm-1" th:text="${name}">???</span>
+            <button class="btn btn-outline-secondary my-2 my-sm-0"
+                    onclick="location.href='/logout'" type="submit"> 로그아웃
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -161,13 +173,13 @@
 <div class="container-md">
     <div class="row pl-lg-5 pt-lg-5">
         <div class="col-md-auto">
-            <div class="col-md-auto">
+            <div class="col-md-auto mb-lg-5">
                 <div class="row">
                     <h3 style="margin: auto">실시간 검색어</h3>
                 </div>
                 <a id="one">
                     <div class="row mt-5">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;1</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -182,7 +194,7 @@
 
                 <a id="two">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;2</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -196,7 +208,7 @@
                 </a>
                 <a id="three">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;3</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -208,10 +220,9 @@
                         </div>
                     </div>
                 </a>
-
                 <a id="four">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;4</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -226,7 +237,7 @@
 
                 <a id="five">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;5</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -241,7 +252,7 @@
 
                 <a id="six">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;6</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -255,7 +266,7 @@
                 </a>
                 <a id="seven">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;7</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -269,7 +280,7 @@
                 </a>
                 <a id="eight">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;8</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -283,7 +294,7 @@
                 </a>
                 <a id="nine">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>&nbsp;9</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -297,7 +308,7 @@
                 </a>
                 <a id="ten">
                     <div class="row mt-2">
-                        <div class="col-md-1 mt-1">
+                        <div class="col-md-1">
                             <h4>10</h4>
                         </div>
                         <div class="rolling_box col-md-auto">
@@ -312,7 +323,37 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 mt-lg-5">
+<!--            <div class="row mt-lg-3">-->
+<!--                <form class="form-inline ml-lg-5" method="get">-->
+<!--                    <div class="row">-->
+<!--                        <input type="hidden" name="keyword" th:value="${keyword}">-->
+<!--                        <div class="col">-->
+<!--                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">정렬 기준</label>-->
+<!--                            <input type="hidden" name="keyword" th:value="${keyword}">-->
+<!--                            <select class="custom-select my-1 mr-sm-2 ml-lg-2 mt-lg-2" id="inlineFormCustomSelectPref"-->
+<!--                                    name="sort">-->
+<!--                                <option selected>선택하세요</option>-->
+<!--                                <option value="1">최신순</option>-->
+<!--                                <option value="2">가격 높은순</option>-->
+<!--                                <option value="3">가격 낮은순</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="col">-->
+<!--                            <label class="my-1 mr-2" for="minPrice">최소 가격</label>-->
+<!--                            <input type="number" name="min" id="minPrice" min="0" class="form-control mt-lg-2">-->
+<!--                        </div>-->
+<!--                        <div class="col">-->
+<!--                            <label class="my-1 mr-2" for="maxPrice">최대 가격</label>-->
+<!--                            <input type="number" name="max" id="maxPrice" min="0" class="form-control mt-lg-2">-->
+<!--                        </div>-->
+<!--                        <div class="col">-->
+<!--                            <label class="my-1 mr-2">&nbsp;</label>-->
+<!--                            <button class="btn btn-secondary my-1 ml-lg-2 mt-lg-2">검색</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
             <div class="row mt-lg-3">
                 <div th:each="boardVO : ${items}" class=" card col-lg-3 p-lg-4 mr-lg-5 mt-lg-5 mb-lg-5"
                      style="margin: auto">
@@ -327,42 +368,51 @@
                                     0,000</h4>
                             </div>
                             <div class="col">
-                                <a th:onclick="" data-toggle="modal" data-target="#exampleModal" class="button"><span class="heart"
-                                                                                                        style="margin-top: 20%; float: right"></span></a>
+                                <a data-toggle="modal" th:data-target="'#modal' + ${boardVO.getId()}"
+                                   class="button"><span
+                                        class="heart"
+                                        style="margin-top: 20%; float: right"></span>
+                                </a>
                             </div>
+
                         </div>
                         <div class="row">
                             <p class="card-text mt-3" th:text="${boardVO.getTitle()}">제품</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="col-lg-2"></div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">즐겨찾기 추가</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <br>
-            <div class="modal-body">
-                즐겨찾기에 추가하시겠습니까?
-            </div>
-            <br>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">예</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+<div th:each="boardV1 : ${items}">
+    <div class="modal fade" th:id="'modal' + ${boardV1.getId()}" tabindex="-1" role="dialog"
+         th:aria-labelledby="'modalLable' + ${boardV1.getId()}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:id="'modalLable' + ${boardV1.getId()}">즐겨찾기 추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    즐겨찾기에 추가 하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <form action="/favorite" method="post">
+                        <input type="hidden" th:name="id" th:value="${boardV1.getId()}">
+                        <button type="submit" class="btn btn-primary">예</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item" th:if="${pageMaker.prev} == true">
@@ -499,7 +549,7 @@
     ]    // 롤링할 데이터를 넣으면 됩니다 갯수 제한 없어요
     function a() {
         $.ajax({
-            url: 'http://localhost:7777/rank',
+            url: '/rank',
             type: 'GET',
             success: function (data) {
                 var i = 0;
@@ -508,61 +558,61 @@
                         rollingData_one[0] = this["title"];
                         rollingData_one[1] = this["title"];
                         first_one.children[0].innerHTML = rollingData_one[0];
-                        document.getElementById("one").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("one").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 1) {
                         rollingData_two[0] = this["title"];
                         rollingData_two[1] = this["title"];
                         first_two.children[0].innerHTML = rollingData_two[0];
-                        document.getElementById("two").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("two").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 2) {
                         rollingData_three[0] = this["title"];
                         rollingData_three[1] = this["title"];
                         first_three.children[0].innerHTML = rollingData_three[0];
-                        document.getElementById("three").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("three").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 3) {
                         rollingData_four[0] = this["title"];
                         rollingData_four[1] = this["title"];
                         first_four.children[0].innerHTML = this["title"];
-                        document.getElementById("four").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("four").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 4) {
                         rollingData_five[0] = this["title"];
                         rollingData_five[1] = this["title"];
                         first_five.children[0].innerHTML = this["title"];
-                        document.getElementById("five").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("five").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 5) {
                         rollingData_six[0] = this["title"];
                         rollingData_six[1] = this["title"];
                         first_six.children[0].innerHTML = this["title"];
-                        document.getElementById("six").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("six").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 6) {
                         rollingData_seven[0] = this["title"];
                         rollingData_seven[1] = this["title"];
                         first_seven.children[0].innerHTML = this["title"];
-                        document.getElementById("seven").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("seven").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 7) {
                         rollingData_eight[0] = this["title"];
                         rollingData_eight[1] = this["title"];
                         first_eight.children[0].innerHTML = this["title"];
-                        document.getElementById("eight").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("eight").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 8) {
                         rollingData_nine[0] = this["title"];
                         rollingData_nine[1] = this["title"];
                         first_nine.children[0].innerHTML = this["title"];
-                        document.getElementById("nine").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("nine").href = "/as?keyword=" + this["title"];
                     }
                     if (i === 9) {
                         rollingData_ten[0] = this["title"];
                         rollingData_ten[1] = this["title"];
                         first_ten.children[0].innerHTML = this["title"];
-                        document.getElementById("ten").href = "http://localhost:7777/as?keyword=" + this["title"];
+                        document.getElementById("ten").href = "/as?keyword=" + this["title"];
                     }
                     i++;
                 })
@@ -581,7 +631,7 @@
     let move_one = 2
     let dataCnt_one = 1
     let listCnt_one = 1
-
+    first_one.children[0].innerHTML = rollingData_one[0];
     //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
     setInterval(() => {
         if (move_one === 2) {
@@ -633,6 +683,7 @@
     let move_two = 2
     let dataCnt_two = 1
     let listCnt_two = 1
+    first_two.children[0].innerHTML = rollingData_two[0];
 
 
     //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.

@@ -28,8 +28,20 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByTitleContainsOrderByIdDesc(String title, Pageable pageable);
 
-    int countByTitleContains(String title);
 
+    @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') and price => :min and price <= :max order by price asc limit 12 offset :page")
+    List<Item> findByMinAsc(String keyword, int min, int max, int page);
+
+    @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') and price => :min and price <= :max order by price desc limit 12 offset :page")
+    List<Item> findByMinDesc(String keyword, int min, int max, int page);
+
+    @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') and price => :min and price <= :max order by id desc limit 12 offset :page")
+    List<Item> findByMin(String keyword, int min, int max, int page);
+
+    @Query(nativeQuery = true, value = "select count(id) from item where title LIKE CONCAT('%', :keyword, '%') and price => :min and price <= :max ")
+    int countByMin(String keyword, int min, int max);
+
+    int countByTitleContains(String title);
 
     @Query(nativeQuery = true, value = "select * from item where title LIKE CONCAT('%', :keyword, '%') ORDER BY price")
     List<Item> findByASC(String keyword);
